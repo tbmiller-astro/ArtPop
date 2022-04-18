@@ -49,6 +49,7 @@ setup(
         'fast-histogram>=0.9',
         'requests',
         'jax',
+        'jaxlib',
      ],
      classifiers=[
         "Programming Language :: Python :: 3",
