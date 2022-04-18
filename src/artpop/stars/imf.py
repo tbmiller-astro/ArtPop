@@ -4,7 +4,8 @@ from scipy.integrate import quad
 from scipy.interpolate import interp1d
 from astropy import units as u
 from typing import Iterable
-
+from functools import partial
+import jax
 # Project
 from ..util import check_random_state, check_units
 
@@ -154,7 +155,7 @@ def sample_imf(num_stars, m_min=0.08, m_max=120, imf='kroupa',
     masses = cdf(rand_num)
     return masses
 
-
+@partial(jax.jit, static_argnames=['stellar_mass','imf','random_state','m_min','m_max','num_stars_iter'])
 def build_galaxy(stellar_mass, num_stars_iter=1e5, m_min=0.08, m_max=120, imf='kroupa',
     num_mass_bins=100000, random_state=None, imf_kw={}):
     """
@@ -210,7 +211,7 @@ def build_galaxy(stellar_mass, num_stars_iter=1e5, m_min=0.08, m_max=120, imf='k
     
     stars = []
     total_mass = 0.0
-    stellar_mass = check_units(stellar_mass, 'Msun').to('Msun').value
+    # stellar_mass = check_units(stellar_mass, 'Msun').to('Msun').value
     
     #Ensure the while loop does not get stuck
     if num_stars_iter < 1: 
