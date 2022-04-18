@@ -48,6 +48,7 @@ setup(
         'matplotlib>=3',
         'fast-histogram>=0.9',
         'requests',
+        'jax',
      ],
      classifiers=[
         "Programming Language :: Python :: 3",
